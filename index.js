@@ -32,7 +32,7 @@ async function run() {
       console.log(`Original content: ${content}`);
 
       let newContent;
-      if (useRegex) {
+      if (useRegex === 'true') {
         console.log('Using regex');
         const regex = new RegExp(pattern, 'g');
         newContent = content.replace(regex, replacement);
