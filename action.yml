@@ -1,0 +1,25 @@
+name: 'Find and Replace Action'
+description: 'Finds a pattern and replaces it with a specified string in given files'
+
+inputs:
+  pattern:
+    description: 'Pattern to find'
+    type: 'string'
+    required: true
+  use-regex:
+    description: 'Whether to treat the pattern as a regular expression'
+    required: false
+    type: 'boolean'
+    default: 'false'
+  replacement:
+    description: 'Replacement string'
+    type: 'string'
+    required: true
+  files:
+    type: 'string'
+    description: 'Comma-separated list of files to perform find and replace on'
+    required: true
+
+runs:
+  using: 'node16'
+  main: 'index.js'
