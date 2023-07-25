@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
@@ -26,10 +25,7 @@ async function run() {
     // Loop over each file and replace content
     for (const filePath of files) {
       const fullPath = path.resolve(filePath.trim());
-      console.log(`Full path: ${fullPath}`);
-
-      const content = await readFileAsync(fullPath, 'utf8');
-      console.log(`Original content: ${content}`);
+      console.log(`Replacing in file path: ${fullPath}`);
 
       let newContent;
       if (useRegex === 'true') {
@@ -37,9 +33,7 @@ async function run() {
         const regex = new RegExp(pattern, 'g');
         newContent = content.replace(regex, replacement);
       } else {
-        console.log('Not using regex');
         const parts = content.split(pattern);
-        console.log(`Number of parts: ${parts.length}`);
         newContent = parts.join(replacement);
       }
 
