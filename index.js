@@ -11,39 +11,27 @@ async function run() {
   try {
     // Get inputs
     const pattern = core.getInput('pattern');
-    console.log(`Pattern: ${pattern}`);
-
-    const useRegex = core.getInput('use-regex');
-    console.log(`Use Regex: ${useRegex}`);
-
+    const useRegex = core.getInput('use-regex') === 'true';
     const replacement = core.getInput('replacement');
-    console.log(`Replacement: ${replacement}`);
-
     const files = core.getInput('files').split(',');
-    console.log(`Files: ${files}`);
 
     // Loop over each file and replace content
     for (const filePath of files) {
       const fullPath = path.resolve(filePath.trim());
-      console.log(`Replacing in file path: ${fullPath}`);
+      const content = await readFileAsync(fullPath, 'utf8');
 
       let newContent;
-      if (useRegex === 'true') {
-        console.log('Using regex');
+      if (useRegex) {
         const regex = new RegExp(pattern, 'g');
         newContent = content.replace(regex, replacement);
       } else {
-        const parts = content.split(pattern);
-        newContent = parts.join(replacement);
+        newContent = content.split(pattern).join(replacement);
       }
-
-      console.log(`New content: ${newContent}`);
 
       // Write new content to file
       await writeFileAsync(fullPath, newContent, 'utf8');
     }
   } catch (error) {
-    console.log(`Error: ${error.message}`);
     core.setFailed(error.message);
   }
 }
