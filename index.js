@@ -33,10 +33,14 @@ async function run() {
 
       let newContent;
       if (useRegex) {
+        console.log('Using regex');
         const regex = new RegExp(pattern, 'g');
         newContent = content.replace(regex, replacement);
       } else {
-        newContent = content.split(pattern).join(replacement);
+        console.log('Not using regex');
+        const parts = content.split(pattern);
+        console.log(`Number of parts: ${parts.length}`);
+        newContent = parts.join(replacement);
       }
 
       console.log(`New content: ${newContent}`);
